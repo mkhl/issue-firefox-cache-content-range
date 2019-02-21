@@ -4,5 +4,7 @@ express()
 	.use(compression())
 	.use(express.static('public', { setHeaders: (res, path, stat) => {
 		res.set('Content-Range', `bytes 0-${stat.size-1}/${stat.size}`)
+		res.set('Transfer-Encoding', 'chunked')
+		res.removeHeader('Content-Length')
 	}}))
 	.listen(8080)
